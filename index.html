@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Joy Home Foods</title>
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+<header>
+    <img src="images/logo.png" alt="Joy Home Foods" class="header-logo">
+    <h1>Joy Home Foods</h1>
+    <h2 class="sub-title">Joy Homemade Snacks</h2>
+    <p class="tagline">
+        Authentic Telugu Homemade Snacks — <span>Fresh</span> • <span>Hygienic</span> • <span>Traditional</span> • <span>Delivered With Love</span>
+    </p>
+    <p class="quality-line">We Serve with Quality</p>
+</header>
+
+<div class="top-actions">
+    <input type="text" id="search-bar" placeholder="Search snacks...">
+    <button id="cartBtn">🛒</button>
+    <button id="themeToggle">🌙</button>
+</div>
+
+<section id="products" class="product-grid">
+    <!-- Products loaded dynamically -->
+</section>
+
+<footer>
+    <p>1st Street Mangalagiri, Ambedkar Nagar (Sibiram), Guntur District, Andhra Pradesh — 522503</p>
+</footer>
+
+<!-- Product Modal -->
+<div id="productModal" class="modal hidden">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-inner">
+        <button id="modalClose" class="modal-close">✕</button>
+        <div class="modal-media"><img id="modalImg" src="" alt=""></div>
+        <div class="modal-body">
+            <h3 id="modalTitle"></h3>
+            <p id="modalTelugu" class="modal-telugu"></p>
+            <p id="modalDesc"></p>
+            <div class="modal-meta">
+                <div class="modal-price" id="modalPrice"></div>
+                <button id="modalAdd" class="btn primary">Add to cart</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+<script src="product-modal.js"></script>
+<script>
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
+</script>
+</body>
+</html>

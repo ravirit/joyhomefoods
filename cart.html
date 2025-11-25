@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cart - Joy Home Foods</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <img src="images/logo.png" alt="Joy Home Foods" class="header-logo">
+    <h1>Your Cart</h1>
+</header>
+
+<div class="top-actions">
+    <input type="text" id="search-bar" placeholder="Search snacks...">
+    <button onclick="window.location='index.html'">🏠 Home</button>
+</div>
+
+<section class="cart-section">
+    <ul id="cart-list"></ul>
+    <p class="total-price">Total: ₹<span id="total">0</span></p>
+    <button id="checkout-btn" class="btn primary">Proceed to Checkout</button>
+</section>
+
+<section id="checkout" class="checkout-section hidden">
+    <h2>Checkout & Delivery</h2>
+    <form id="checkout-form">
+        <label>Full Name:<input type="text" id="customer-name" required></label>
+        <label>Phone Number:<input type="tel" id="customer-phone" required></label>
+        <label>Delivery Address:<textarea id="customer-address" rows="3" required></textarea></label>
+        <label>Payment Method:</label>
+        <div class="payment-options">
+            <label><input type="radio" name="payment" value="UPI" required> UPI / Google Pay / PhonePe</label>
+            <label><input type="radio" name="payment" value="Bank"> Bank Transfer</label>
+            <label><input type="radio" name="payment" value="COD"> Cash on Delivery</label>
+        </div>
+        <button type="submit" class="btn primary">Place Order via WhatsApp</button>
+    </form>
+    <p id="order-success" class="success-msg hidden">
+        Your order has been placed successfully!
+    </p>
+</section>
+
+<footer>
+    <p>1st Street Mangalagiri, Ambedkar Nagar (Sibiram), Guntur District, Andhra Pradesh — 522503</p>
+</footer>
+
+<script src="script.js"></script>
+<script>
+const cartList = document.getElementById('cart-list');
+const totalEl = document.getElementById('total');
+const checkoutSection = document.getElementById('checkout');
+const checkoutBtn = document.getElementById('checkout-btn');
+let total = 0;
+
+// Load cart from localStorage
+function updateCartPage(){
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cartList.innerHTML = '';
+    total = 0;
+    cart.forEach((item, i)=>{
+        total += item.price;
+        const li = document.createElement('li');
+        li.innerHTML = `${item.name} - ₹${item.price} <button onclick="removeItem(${i})">❌</button>`;
+        cartList.appendChild(li);
+    });
+    totalEl.textContent = total;
+}
+updateCartPage();
+
+// Remove item
+window.removeItem = function(i){
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.splice(i,1);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartPage();
+}
+
+// Checkout button
+checkoutBtn.addEventListener('click', ()=>{
+    if(total===0){ alert('Cart is empty!'); return; }
+    checkoutSection.classList.remove('hidden');
+    checkoutSection.scrollIntoView({behavior:'smooth'});
+});
+
+// Checkout form submit
+const form = document.getElementById('checkout-form');
+form.addEventListener('submit', e=>{
+    e.preventDefault();
+    const name = document.getElementById('customer-name').value;
+    const phone = document.getElementById('customer-phone').value;
+    const address = document.getElementById('customer-address').value;
+    const payment = document.querySelector('input[name="payment"]:checked')?.value;
+    if(!payment){ alert("Select a payment method!"); return; }
+
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let message = "Hello! I would like to order:\n";
+    cart.forEach(item=> message += `${item.name} - ₹${item.price}\n`);
+    message += `Total: ₹${total}\n\nName: ${name}\nPhone: ${phone}\nAddress: ${address}\nPayment: ${payment}`;
+
+    window.open(`https://wa.me/+918977801118?text=${encodeURIComponent(message)}`, "_blank");
+
+    form.reset();
+    checkoutSection.classList.add('hidden');
+    document.getElementById('order-success').classList.remove('hidden');
+    localStorage.setItem('cart', JSON.stringify([]));
+    updateCartPage();
+});
+</script>
+</body>
+</html>

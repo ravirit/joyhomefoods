@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wishlist - Joy Home Foods</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <img src="images/logo.png" alt="Joy Home Foods" class="header-logo">
+    <h1>Your Wishlist</h1>
+</header>
+
+<div class="top-actions">
+    <input type="text" id="search-bar" placeholder="Search snacks...">
+    <button onclick="window.location='index.html'">🏠 Home</button>
+</div>
+
+<section class="wishlist-section">
+    <ul id="wishlist-list"></ul>
+</section>
+
+<footer>
+    <p>1st Street Mangalagiri, Ambedkar Nagar (Sibiram), Guntur District, Andhra Pradesh — 522503</p>
+</footer>
+
+<script src="script.js"></script>
+<script>
+const wishlistList = document.getElementById('wishlist-list');
+
+function updateWishlistPage(){
+    const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    wishlistList.innerHTML = '';
+    wishlist.forEach((item,i)=>{
+        const li = document.createElement('li');
+        li.innerHTML = `${item.name} - ₹${item.price} <button onclick="removeWishlist(${i})">❌</button>`;
+        wishlistList.appendChild(li);
+    });
+}
+updateWishlistPage();
+
+window.removeWishlist = function(i){
+    let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    wishlist.splice(i,1);
+    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+    updateWishlistPage();
+}
+
+// Search
+const searchBar = document.getElementById("search-bar");
+searchBar.addEventListener('input', ()=>{
+    const q = searchBar.value.toLowerCase();
+    const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    const filtered = wishlist.filter(item=> item.name.toLowerCase().includes(q) || (item.telugu && item.telugu.includes(q)));
+    wishlistList.innerHTML = '';
+    filtered.forEach((item,i)=>{
+        const li = document.createElement('li');
+        li.innerHTML = `${item.name} - ₹${item.price} <button onclick="removeWishlist(${i})">❌</button>`;
+        wishlistList.appendChild(li);
+    });
+});
+</script>
+</body>
+</html>
