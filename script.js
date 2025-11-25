@@ -1,8 +1,8 @@
 // ===================== PRODUCTS =====================
 const products = [
-    { name:"Ariselu", telugu:"అరిసెలు", img:"images/ariselu.jpg", price:120, desc:"Soft, sweet, and made with pure ghee and jaggery." },
-    { name:"Chekkalu", telugu:"చెక్కలు", img:"images/chekkalu.jpg", price:160, desc:"Crispy and flavorful traditional Telugu snack." },
-    { name:"Kajjikayalu", telugu:"కజ్జికాయలు", img:"images/kajjikayalu.jpg", price:150, desc:"Sweet coconut filling wrapped in crispy shell." }
+    { name:"Ariselu", telugu:"అరిసెలు", img:"ariselu.jpg", price:120, desc:"Soft, sweet, and made with pure ghee and jaggery." },
+    { name:"Chekkalu", telugu:"చెక్కలు", img:"chekkalu.jpg", price:160, desc:"Crispy and flavorful traditional Telugu snack." },
+    { name:"Kajjikayalu", telugu:"కజ్జికాయలు", img:"kajjikayalu.jpg", price:150, desc:"Sweet coconut filling wrapped in crispy shell." }
 ];
 
 // ===================== LOCAL STORAGE =====================
@@ -155,3 +155,4 @@ searchBars.forEach(searchBar => {
         });
     });
 });
+
